@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 
 public abstract class DB_Model {
     private static Connection connectref;
-    private static String path = "jdbc:sqlite:achievemetns.db";
+    private static String path = "jdbc:sqlite:achievements.db";
 
     private static boolean connect()
     {
