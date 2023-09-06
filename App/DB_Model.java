@@ -65,8 +65,26 @@ public abstract class DB_Model {
         catch(SQLException e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Field to Create project DB tables.");
+            System.out.println("Failed to Create project DB tables.");
             return false;
         }
-    }    
+    }
+    
+    public static void addNewMeasuringAchievementStandard(MeasuringAchievementStandard newMeasuringAchievementStandard)
+    {
+        String insertQuery = "INSERT INTO measuring_achievement_standard(title, daily_tracking_question_sentence, measure_Standard_Symbol) VALUES(?,?,?)";
+        try
+        {
+            PreparedStatement insert = connectref.prepareStatement(insertQuery);
+            insert.setString(1, newMeasuringAchievementStandard.getTitle());
+            insert.setString(2, newMeasuringAchievementStandard.getDailyTrackingQuestionSentence());
+            insert.setString(3, newMeasuringAchievementStandard.getMeasureStandardSymbol());
+            insert.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to save your new Measuring Achievement Stndard.");
+        }
+    }
 }
