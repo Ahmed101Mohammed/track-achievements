@@ -27,7 +27,7 @@ public abstract class DB_Model {
             +  "    measuring_achievement_standard_id INTEGER NOT NULL,\n"
             +  "    date TEXT NOT NULL,\n"
             +  "    date_value INTEGER NOT NULL,\n"
-            +  "    progress_value INTEGER NOT NULL);";
+            +  "    progress_value REAL NOT NULL);";
             if(createTablesInDB(appTables))
             {
                 return true;
@@ -80,7 +80,7 @@ public abstract class DB_Model {
             insert.setInt(1, measuringAchievementStandardId);
             insert.setString(2, newAchievement.getDate());
             insert.setInt(3, convertDateToInt(newAchievement.getDate()));
-            insert.setInt(4, newAchievement.getProgressValue());
+            insert.setDouble(4, newAchievement.getProgressValue());
             insert.executeUpdate();
         }
         catch (SQLException e)
@@ -90,7 +90,7 @@ public abstract class DB_Model {
         }
     }
 
-    public int getProgressesSumOfAchievementsOfAnMeasuringAchievementStandardOnSpecificTiemPeriod(String standardTitle, String date1, String date2)
+    public static double getProgressesSumOfAchievementsOfAnMeasuringAchievementStandardOnSpecificTiemPeriod(String standardTitle, String date1, String date2)
     {
         String query = "SELECT SUM(progressValue) AS total_progress_values FROM achievement WHERE date_value BETWEEN " + convertDateToInt(date1) 
                         + " AND "+convertDateToInt(date2)+" OR date_value BETWEEN "+ convertDateToInt(date2) +" AND "+convertDateToInt(date1)+";";
@@ -100,7 +100,7 @@ public abstract class DB_Model {
             ResultSet result = getSum.executeQuery(query);
             if(result.next())
             {
-                return result.getInt("total_progress_values");
+                return result.getDouble("total_progress_values");
             }
             else
             {
@@ -114,7 +114,7 @@ public abstract class DB_Model {
         }
     }
 
-    public int getProgressesAvrageOfAchievementsOfAnMeasuringAchievementStandardOnSpecificTiemPeriod(String standardTitle, String date1, String date2)
+    public static double getProgressesAvrageOfAchievementsOfAnMeasuringAchievementStandardOnSpecificTiemPeriod(String standardTitle, String date1, String date2)
     {
         String query = "SELECT AVG(progressValue) AS avrage_progress_values FROM achievement WHERE date_value BETWEEN " + convertDateToInt(date1) 
                         + " AND "+convertDateToInt(date2)+" OR date_value BETWEEN "+ convertDateToInt(date2) +" AND "+convertDateToInt(date1)+";";
@@ -124,7 +124,7 @@ public abstract class DB_Model {
             ResultSet result = getSum.executeQuery(query);
             if(result.next())
             {
-                return result.getInt("avrage_progress_values");
+                return result.getDouble("avrage_progress_values");
             }
             else
             {
@@ -138,7 +138,7 @@ public abstract class DB_Model {
         }
     }
 
-    public int getProgressesSumOfAllAchievemetns()
+    public static double getProgressesSumOfAllAchievemetns()
     {
         String query = "SELECT SUM(progressValue) AS total_progress_values FROM achievement;";
         try
@@ -147,7 +147,7 @@ public abstract class DB_Model {
             ResultSet result = getSum.executeQuery(query);
             if(result.next())
             {
-                return result.getInt("total_progress_values");
+                return result.getDouble("total_progress_values");
             }
             else
             {
@@ -161,7 +161,7 @@ public abstract class DB_Model {
         }
     }
 
-    public int getProgressesAvrageOfAllAchievemetns()
+    public static double getProgressesAvrageOfAllAchievemetns()
     {
         String query = "SELECT AVG(progressValue) AS avrage_progress_values FROM achievement;";
         try
@@ -170,7 +170,7 @@ public abstract class DB_Model {
             ResultSet result = getSum.executeQuery(query);
             if(result.next())
             {
-                return result.getInt("avrage_progress_values");
+                return result.getDouble("avrage_progress_values");
             }
             else
             {
@@ -230,8 +230,8 @@ public abstract class DB_Model {
         }
         catch (SQLException e)
         {
-            System.out.println(e.getMessage());
             System.out.println("Failed to save your new Measuring Achievement Stndard.");
+            System.out.println(e.getMessage());
         }
     }
 
@@ -250,6 +250,7 @@ public abstract class DB_Model {
         }
         catch(SQLException e)
         {
+            System.out.println("Error with geting the ID of a measuring achievement standard.");
             System.out.println(e.getMessage());
             return -1;
         }
