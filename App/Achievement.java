@@ -3,9 +3,9 @@ package App;
 public class Achievement extends MeasuringAchievementStandard
 {
     private String date;
-    private int progressValue;
+    private double progressValue;
 
-    public Achievement(String title, String dailyTrackingQuestionSentence, String measureStandardSymbol ,String date, int progress)
+    public Achievement(String title, String dailyTrackingQuestionSentence, String measureStandardSymbol ,String date, double progress)
     {
         super(title, dailyTrackingQuestionSentence, measureStandardSymbol);
         this.date = date;
@@ -17,8 +17,9 @@ public class Achievement extends MeasuringAchievementStandard
         return this.date;
     }
 
-    public int getProgressValue()
+    public double getProgressValue()
     {
         return this.progressValue;
     }
+
 }
