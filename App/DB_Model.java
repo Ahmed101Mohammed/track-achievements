@@ -92,8 +92,10 @@ public abstract class DB_Model {
 
     public static double getProgressesSumOfAchievementsOfAnMeasuringAchievementStandardOnSpecificTiemPeriod(String standardTitle, String date1, String date2)
     {
-        String query = "SELECT SUM(progressValue) AS total_progress_values FROM achievement WHERE date_value BETWEEN " + convertDateToInt(date1) 
-                        + " AND "+convertDateToInt(date2)+" OR date_value BETWEEN "+ convertDateToInt(date2) +" AND "+convertDateToInt(date1)+";";
+        int standardId = getMeasuringAchievementStandardId(standardTitle);
+        String query = "SELECT SUM(progress_value) AS total_progress_values FROM achievement WHERE measuring_achievement_standard_id = "+ standardId
+                        +" AND (date_value BETWEEN " + convertDateToInt(date1) + " AND "+convertDateToInt(date2)+" OR date_value BETWEEN "
+                        + convertDateToInt(date2) +" AND "+convertDateToInt(date1)+");";
         try
         {
             Statement getSum = connectref.createStatement();
@@ -116,8 +118,10 @@ public abstract class DB_Model {
 
     public static double getProgressesAvrageOfAchievementsOfAnMeasuringAchievementStandardOnSpecificTiemPeriod(String standardTitle, String date1, String date2)
     {
-        String query = "SELECT AVG(progressValue) AS avrage_progress_values FROM achievement WHERE date_value BETWEEN " + convertDateToInt(date1) 
-                        + " AND "+convertDateToInt(date2)+" OR date_value BETWEEN "+ convertDateToInt(date2) +" AND "+convertDateToInt(date1)+";";
+        int standardId = getMeasuringAchievementStandardId(standardTitle);
+        String query = "SELECT AVG(progress_value) AS avrage_progress_values FROM achievement WHERE measuring_achievement_standard_id = "+standardId 
+                        +" AND (date_value BETWEEN " + convertDateToInt(date1) + " AND "+convertDateToInt(date2)+" OR date_value BETWEEN "
+                        + convertDateToInt(date2) +" AND "+convertDateToInt(date1)+");";
         try
         {
             Statement getSum = connectref.createStatement();
@@ -138,9 +142,10 @@ public abstract class DB_Model {
         }
     }
 
-    public static double getProgressesSumOfAllAchievemetns()
+    public static double getProgressesSumOfAllAchievemetns(String standardTitle)
     {
-        String query = "SELECT SUM(progressValue) AS total_progress_values FROM achievement;";
+        int standardId = getMeasuringAchievementStandardId(standardTitle);
+        String query = "SELECT SUM(progress_value) AS total_progress_values FROM achievement WHERE measuring_achievement_standard_id = " + standardId + " ;";
         try
         {
             Statement getSum = connectref.createStatement();
@@ -161,9 +166,10 @@ public abstract class DB_Model {
         }
     }
 
-    public static double getProgressesAvrageOfAllAchievemetns()
+    public static double getProgressesAvrageOfAllAchievemetns(String standardTitle)
     {
-        String query = "SELECT AVG(progressValue) AS avrage_progress_values FROM achievement;";
+        int standardId = getMeasuringAchievementStandardId(standardTitle);
+        String query = "SELECT AVG(progress_value) AS avrage_progress_values FROM achievement WHERE measuring_achievement_standard_id = " + standardId + " ;";
         try
         {
             Statement getSum = connectref.createStatement();
@@ -352,6 +358,5 @@ public abstract class DB_Model {
         }
 
         return resultsInArrayListForm;
-    }
-    
+    }   
 }
