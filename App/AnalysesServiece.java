@@ -1,15 +1,17 @@
 package App;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
 
 public abstract class AnalysesServiece {
+    private static LocalDate toDay = LocalDate.now();
     private static HashSet<String> validString = new HashSet<String>(
             Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "/"));
-    private static String[] services = {"Custom time period analystics service.", "Last year analytics service.", "Last month analytics service.",
-                                    "Last week analytics service.", "Last day analytics service."};
+    private static String[] services = {"Custom time period analystics service.", "All time analytics service.", "Last year analytics service.", "Last month analytics service.",
+                                    "Last week analytics service.", "Last day analytics service.", "Today analytics service."};
     public static void servicesGuid()
     {
         while(true)
@@ -36,16 +38,22 @@ public abstract class AnalysesServiece {
                 customTimePeriodAnalyticsService();
                 break;
             case "2":
-                lastYearAnalyticsService();
+                allTimeAnalyticsService();
                 break;
             case "3":
-                lastMonthAnalyticsService();
+                lastYearAnalyticsService();
                 break;
             case "4":
-                lastWeekAnalyticsService();
+                lastMonthAnalyticsService();
                 break;
             case "5":
+                lastWeekAnalyticsService();
+                break;
+            case "6":
                 lastDayAnalyticsService();
+                break;
+             case "7":
+                toDayAnalyticsService();
                 break;
             default:
                 System.out.println("Please enter number of exist service.");
@@ -67,6 +75,63 @@ public abstract class AnalysesServiece {
         }
     }
 
+    private static void allTimeAnalyticsService()
+    {
+        ArrayList<MeasuringAchievementStandard> standards = DB_Model.getAllMeasuringAchievemntsStandards();
+        if(standards.size() == 0)
+        {
+            System.out.println("You does not have any Measuring Achievement Standard. Add one please.");
+        }
+        else
+        {
+            printTheAnalaticsResultsForAll(standards);
+        }
+    }
+
+    private static void lastYearAnalyticsService()
+    {
+        LocalDate lastYear = toDay.minusYears(1);
+        String toDayString = convertLocalDateToString(toDay);
+        String lastYeString = convertLocalDateToString(lastYear);
+        getSumAndAvrageForAchievemetnsBetweenTwoDates(lastYeString, toDayString);
+    }
+
+    private static void lastMonthAnalyticsService()
+    {
+        LocalDate lastMonth = toDay.minusMonths(1);
+        String toDayString = convertLocalDateToString(toDay);
+        String lastMonthString = convertLocalDateToString(lastMonth);
+        getSumAndAvrageForAchievemetnsBetweenTwoDates(lastMonthString, toDayString);
+    }
+
+    private static void lastWeekAnalyticsService()
+    {
+        LocalDate lastWeek = toDay.minusWeeks(1);
+        String toDayString = convertLocalDateToString(toDay);
+        String lastWeekString = convertLocalDateToString(lastWeek);
+        getSumAndAvrageForAchievemetnsBetweenTwoDates(lastWeekString, toDayString);
+    }
+
+    private static void lastDayAnalyticsService()
+    {
+        LocalDate lastDay = toDay.minusDays(1);
+        String toDayString = convertLocalDateToString(toDay);
+        String lastDayString = convertLocalDateToString(lastDay);
+        getSumAndAvrageForAchievemetnsBetweenTwoDates(lastDayString, toDayString);
+    }
+
+    private static void toDayAnalyticsService()
+    {
+        String toDayString = convertLocalDateToString(toDay);
+        getSumAndAvrageForAchievemetnsBetweenTwoDates(toDayString, toDayString);
+    }
+
+    private static String convertLocalDateToString(LocalDate date)
+    {
+        String dateInString = date.getYear() + "/" + date.getMonthValue()+ "/" + date.getDayOfMonth();
+        return dateInString;
+    }
+
     private static String getDate(String question)
     {
         while(true)
@@ -76,7 +141,7 @@ public abstract class AnalysesServiece {
             if(date.equals("../")){return "back";}
             if(! isDateInLegalForm(date))
             {
-                System.out.println("Please use this form for adding dates): YYYY/MM/DD Like 2000/1/1");
+                System.out.println("Please use this form for adding dates: YYYY/MM/DD Like 2000/1/1");
                 continue;
             }
             String[] yearMonthDay = yearMonthDay(date);
@@ -225,12 +290,25 @@ public abstract class AnalysesServiece {
             for(int i = 0; i < standards.size(); i++)
             {
                 MeasuringAchievementStandard standard = standards.get(i);
-                double sum = DB_Model.getProgressesAvrageOfAchievementsOfAnMeasuringAchievementStandardOnSpecificTiemPeriod(standard.getTitle(), date1, date2);
+                double sum = DB_Model.getProgressesSumOfAchievementsOfAnMeasuringAchievementStandardOnSpecificTiemPeriod(standard.getTitle(), date1, date2);
                 double avrage = DB_Model.getProgressesAvrageOfAchievementsOfAnMeasuringAchievementStandardOnSpecificTiemPeriod(standard.getTitle(), date1, date2);
                 anlyticses += "\nAchievement Title: "+ standard.getTitle() + "\tYour Achievements Total: " + sum + " " + standard.getMeasureStandardSymbol()
-                                + "\tYour Achievements Avarage: " + avrage + " " + standard.getMeasureStandardSymbol();
+                                + "\tYour Achievements Avarage: " + avrage + " " + standard.getMeasureStandardSymbol() + "for each achievement";
             }
             System.out.println(anlyticses);
         }
 
+        private static void printTheAnalaticsResultsForAll(ArrayList<MeasuringAchievementStandard> standards)
+        {
+            String anlyticses = "\nThese is your achievements analytics for all what you achieved before: ";
+            for(int i = 0; i < standards.size(); i++)
+            {
+                MeasuringAchievementStandard standard = standards.get(i);
+                double sum = DB_Model.getProgressesSumOfAllAchievemetns(standard.getTitle());
+                double avrage = DB_Model.getProgressesAvrageOfAllAchievemetns(standard.getTitle());
+                anlyticses += "\nAchievement Title: "+ standard.getTitle() + "\tYour Achievements Total: " + sum + " " + standard.getMeasureStandardSymbol()
+                                + "\tYour Achievements Avarage: " + avrage + " " + standard.getMeasureStandardSymbol() + " for each achievement.";
+            }
+            System.out.println(anlyticses);
+        }
 }
