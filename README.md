@@ -21,3 +21,34 @@ There are main challenges that I faced from the beginning of the planning for th
 - In the beginning of the planning I find it's a challenge problem to determine the relations between my classes.
 - In the middle of the project I found a specific problem with the MeasuringAchievemntStandard class, And I solved it by changing my class diagrams by adding a new class called MesuringAchievementStandardServices.
 - At the end of the project I found a problem with the DB with a complex conditional command, that gave me strange results, and I solved it by making my conditions more specific and logical by just adding parentheses "()".
+
+## Installing and Runing
+### Install the project:
+To install the project you can open your terminal and enter this command:
+```
+git clone https://github.com/Ahmed101Mohammed/track-achievements.git
+```
+### Run the project:
+If you expert than me I expect that you can run this project in way easy than I am. What I will explain is takes some time because I can use the project only in the VS code terminal.
+follow these steps:
+#### First Step:
+If you don't have extensions to run Java code install these extensions from vs code extensions:
+- Extension Pack for Java (This extension contains all the extensions you need).
+#### Second Step:
+Install the jar file of [this website](https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc/3.42.0.1)
+#### Third Step:
+Open the project folder with vs code by typing:
+```
+code .
+```
+In the terminal when being in the directory of the project "track-achievements".
+#### Fourth Step:
+- In VS code environment in the EXPLORER tap, you will find at the bottom this tap: "> JAVA PROJECTS".
+- Click on the tap and you will see a new tap called: "> [] track-achievements".
+- Click on it and many taps will appear, Make the mouse over on this tap: "> [] Referenced Libraries"
+- Then the plus + sign will appear. Press it and find the file that you installed in the ***Therd Step***.
+
+#### Fifth Step (finally):
+In the VS Code environment go to the **App** folder and open **Main.java** file.
+about the **main** method, you will find ***Run*** word, Press it.
+The project will run in a terminal and you can use it.
