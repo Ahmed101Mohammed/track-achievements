@@ -54,7 +54,7 @@ about the **main** method, you will find ***Run*** word, Press it.
 The project will run in a terminal and you can use it.
 
 ## How to use the APP:
-The app contain 3 main feasures. 
+Flow this Youtube video instructions: (track-achievements tutorial video)[https://youtu.be/AOA8S3uyT2g]. 
 
 ## MIT License:
 MIT License
