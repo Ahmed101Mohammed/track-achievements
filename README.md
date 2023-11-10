@@ -22,7 +22,7 @@ There are main challenges that I faced from the beginning of the planning for th
 - In the middle of the project I found a specific problem with the MeasuringAchievemntStandard class, And I solved it by changing my class diagrams by adding a new class called MesuringAchievementStandardServices.
 - At the end of the project I found a problem with the DB with a complex conditional command, that gave me strange results, and I solved it by making my conditions more specific and logical by just adding parentheses "()".
 
-## Installing and Runing
+## Installing and Running
 ### Install the project:
 To install the project you can open your terminal and enter this command:
 ```
@@ -43,18 +43,18 @@ code .
 ```
 In the terminal when being in the directory of the project "track-achievements".
 #### Fourth Step:
-- In VS code environment in the EXPLORER tap, you will find at the bottom this tap: "> JAVA PROJECTS".
+- In the VS code environment in the EXPLORER tap, you will find at the bottom this tap: "> JAVA PROJECTS".
 - Click on the tap and you will see a new tap called: "> [] track-achievements".
 - Click on it and many taps will appear, Make the mouse over on this tap: "> [] Referenced Libraries"
 - Then the plus + sign will appear. Press it and find the file that you installed in the ***Therd Step***.
 
 #### Fifth Step (finally):
-In the VS Code environment go to the **App** folder and open **Main.java** file.
-about the **main** method, you will find ***Run*** word, Press it.
+In the VS Code environment go to the **App** folder and open the **Main.java** file.
+Above the **main** method, you will find ***Run*** word, Press it.
 The project will run in a terminal and you can use it.
 
 ## How to use the APP:
-Flow this Youtube video instructions: [track-achievements tutorial video](https://youtu.be/AOA8S3uyT2g). 
+Flow this YouTube video instructions: [track-achievements tutorial video](https://youtu.be/AOA8S3uyT2g). 
 
 ## MIT License:
 MIT License
